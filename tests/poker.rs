@@ -223,13 +223,29 @@ fn test_straight_flush_ranks() {
     test(&["4H 6H 7H 8H 5H", "5S 7S 8S 9S 6S"], &["5S 7S 8S 9S 6S"])
 }
 
-
 #[test]
 fn decode_hand_as_five_of_a_kind() {
     let input = &"2S 2H 2C 2D 2";
-    
+
     let decoded_hand = decode_hand(input);
 
     assert_eq!(decoded_hand.hand_type, PokerHandType::FiveOfAKind);
     assert_eq!(decoded_hand.rank, 2);
+}
+
+#[test]
+fn decode_hand_as_straight_flush() {
+    let input = vec!["4H 6H 7H 8H 5H", "5S 7S 8S 9S 6S"];
+
+    for hand in input.iter() {
+        let decoded_hand = decode_hand(hand);
+
+        assert_eq!(decoded_hand.hand_type, PokerHandType::StraightFlush);
+    }
+}
+
+#[test]
+fn test_get_card_rank_and_suit() {
+    assert_eq!(get_card_rank("KH"), 13);
+    assert_eq!(get_card_suit("KH"), "H");
 }
